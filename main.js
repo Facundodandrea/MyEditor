@@ -3,10 +3,14 @@ import Split from 'split-grid'
 import { encode, decode } from 'js-base64'
 import * as monaco from 'monaco-editor'
 import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import JsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
 window.MonacoEnvironment = {
   getWorker (label) {
     if (label === 'html') return new HtmlWorker()
+    if (label === 'javascript') return new JsWorker()
+    if (label === 'css') return new CssWorker()
   }
 }
 
@@ -42,22 +46,30 @@ const htmlEditor = monaco.editor.create($html, {
   theme: 'vs-dark',
   fontSize: 18
 })
+const cssEditor = monaco.editor.create($css, {
+  value: css,
+  language: 'css',
+  theme: 'vs-dark',
+  fontSize: 18
+})
+const jsEditor = monaco.editor.create($js, {
+  value: js,
+  language: 'javascript',
+  theme: 'vs-dark',
+  fontSize: 18
+})
 
 htmlEditor.onDidChangeModelContent(update)
-$js.addEventListener('input', update)
-$css.addEventListener('input', update)
-
-// $html.value = html
-$css.value = css
-$js.value = js
+jsEditor.onDidChangeModelContent(update)
+cssEditor.onDidChangeModelContent(update)
 
 const htmlForPreview = createHtml({ html, js, css })
 $('iframe').setAttribute('srcdoc', htmlForPreview)
 
 function update () {
   const html = htmlEditor.getValue()
-  const css = $css.value
-  const js = $js.value
+  const css = cssEditor.getValue()
+  const js = jsEditor.getValue()
 
   const hashedCode = `${encode(html)}|${encode(css)}|${encode(js)}`
 
