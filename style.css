@@ -43,11 +43,26 @@ textarea:focus{
   outline: 0;
 }
 
+.editor{
+  position: relative;
+}
+
+.editor::after{
+  content: '';
+  position: absolute;
+  background-repeat: no-repeat;
+  right: 16px;
+  bottom: 16px;
+  width: 48px;
+  height: 48px;
+  z-index: 1;
+}
+
 #js {
   background-image: url('./assets/js.svg');
 }
 
-#html {
+#html:after {
   background-image: url('./assets/html5.svg');
 }
 
