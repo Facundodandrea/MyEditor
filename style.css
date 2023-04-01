@@ -6,7 +6,7 @@ body{
   line-height: 1.42857143;
   margin: 0;
   padding: 0;
-
+  overflow: hidden;
 }
 
 *{
@@ -72,19 +72,19 @@ textarea:focus{
 
 .grid{
   display: grid;
-  grid-template-columns: 1fr 1px 1fr;
-  grid-template-rows: 1fr 1px 1fr;
+  grid-template-columns: 49.8% 0.4% 49.8%;
+  grid-template-rows: 49.8% 0.4% 49.8%;
   height: 100vh;
 }
 
 .vertical-gutter {
   cursor: col-resize;
   grid-area: 1 / 2 / 4 / 2;
-  border: solid 1px #1f1f1f;
+  border: solid 4px #1f1f1f;
 }
 
 .horizontal-gutter {
   cursor: row-resize;
   grid-area: 2 / 1 / 2 / 4;
-  border: solid 1px #1f1f1f;
+  border: solid 4px #1f1f1f;
 }

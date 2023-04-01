@@ -27,36 +27,38 @@ Split({
   }]
 })
 
-console.log('!main')
+const { pathname } = window.location
+const [rawHtml, rawCss, rawJs] = pathname.slice(1).split('%7C')
 
 const $js = $('#js')
 const $css = $('#css')
 const $html = $('#html')
 
-const { pathname } = window.location
-const [rawHtml, rawCss, rawJs] = pathname.slice(1).split('%7C')
+const html = rawHtml ? decode(rawHtml) : ''
+const css = rawCss ? decode(rawCss) : ''
+const js = rawJs ? decode(rawJs) : ''
 
-const html = decode(rawHtml)
-const css = decode(rawCss)
-const js = decode(rawJs)
+const COMMON_EDITOR_OPTIONS = {
+  automaticLayout: true,
+  theme: 'vs-dark',
+  fontSize: 18
+}
 
 const htmlEditor = monaco.editor.create($html, {
   value: html,
   language: 'html',
-  theme: 'vs-dark',
-  fontSize: 18
+  ...COMMON_EDITOR_OPTIONS
+
 })
 const cssEditor = monaco.editor.create($css, {
   value: css,
   language: 'css',
-  theme: 'vs-dark',
-  fontSize: 18
+  ...COMMON_EDITOR_OPTIONS
 })
 const jsEditor = monaco.editor.create($js, {
   value: js,
   language: 'javascript',
-  theme: 'vs-dark',
-  fontSize: 18
+  ...COMMON_EDITOR_OPTIONS
 })
 
 htmlEditor.onDidChangeModelContent(update)
